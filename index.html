@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>洪錦男 - 主任甄選資料網站</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #fdfbf7; /* Warm neutral background */
+            color: #2d3748;
+        }
+
+        /* Chart Container Styling as per requirements */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .active-tab {
+            border-bottom: 2px solid #2b6cb0;
+            color: #2b6cb0;
+            font-weight: 700;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: #bee3f8;
+            border-radius: 2px;
+        }
+        
+        @media (min-width: 768px) {
+            .timeline-line {
+                left: 24px;
+            }
+        }
+    </style>
+    <!-- Chosen Palette: Professional & Warm 
+         Background: Warm Neutral (#fdfbf7)
+         Primary: Educational Blue (#2b6cb0) - Trust, Stability
+         Secondary: Energetic Orange (#ed8936) - Passion, Innovation
+         Text: Dark Gray (#2d3748) - Readability
+    -->
+</head>
+<body class="bg-[#fdfbf7] text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white shadow-md bg-opacity-95 backdrop-blur">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-graduation-cap text-blue-700 text-2xl"></i>
+                <span class="text-xl font-bold tracking-wide text-blue-800">洪錦男 <span class="text-sm font-normal text-gray-600 hidden sm:inline">| 主任甄選策略規劃</span></span>
+            </div>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="#profile" class="hover:text-blue-600 transition">個人優勢</a>
+                <a href="#philosophy" class="hover:text-blue-600 transition">SMART理念</a>
+                <a href="#vision" class="hover:text-blue-600 transition">願景策略</a>
+                <a href="#growth" class="hover:text-blue-600 transition">未來藍圖</a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-gray-600 focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t p-4 space-y-3 shadow-lg">
+            <a href="#profile" class="block hover:text-blue-600">個人優勢</a>
+            <a href="#philosophy" class="block hover:text-blue-600">SMART理念</a>
+            <a href="#vision" class="block hover:text-blue-600">願景策略</a>
+            <a href="#growth" class="block hover:text-blue-600">未來藍圖</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="profile" class="relative bg-gradient-to-r from-blue-800 to-blue-600 text-white py-16">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-2/3 mb-8 md:mb-0">
+                <div class="inline-block px-3 py-1 bg-orange-500 text-xs font-bold rounded-full mb-4 shadow-lg uppercase tracking-wide">Ready for Leadership</div>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">跨域領航，SMART 行政</h1>
+                <h2 class="text-xl md:text-2xl font-light mb-6 opacity-90">科技與人文並重的教育實踐家</h2>
+                <p class="text-lg opacity-80 max-w-2xl mb-8">
+                    整合企管思維與科技專長，從「執行者」蛻變為「策略規劃者」。
+                    具備教學、資訊、設備組長完整歷練，致力於打造效率與溫度兼具的校園行政體系。
+                </p>
+                <div class="flex space-x-4">
+                    <button onclick="document.getElementById('swot-section').scrollIntoView({behavior: 'smooth'})" class="bg-white text-blue-800 px-6 py-2 rounded-lg font-semibold shadow hover:bg-gray-100 transition">
+                        <i class="fas fa-chart-pie mr-2"></i>策略分析
+                    </button>
+                    <button onclick="document.getElementById('vision').scrollIntoView({behavior: 'smooth'})" class="border border-white text-white px-6 py-2 rounded-lg font-semibold hover:bg-white hover:text-blue-800 transition">
+                        <i class="fas fa-eye mr-2"></i>學校願景
+                    </button>
+                </div>
+            </div>
+            <!-- Interactive Key Stats/Badges -->
+            <div class="md:w-1/3 flex flex-col gap-4">
+                <div class="bg-white/10 backdrop-blur p-4 rounded-xl border border-white/20 flex items-center transform transition hover:scale-105">
+                    <div class="bg-orange-500 p-3 rounded-full mr-4 flex-shrink-0 w-12 h-12 flex items-center justify-center"><i class="fas fa-briefcase text-white"></i></div>
+                    <div>
+                        <div class="text-xs opacity-75">學歷背景</div>
+                        <div class="font-bold">食科碩士 + 企管學士</div>
+                    </div>
+                </div>
+                <div class="bg-white/10 backdrop-blur p-4 rounded-xl border border-white/20 flex items-center transform transition hover:scale-105">
+                    <div class="bg-green-500 p-3 rounded-full mr-4 flex-shrink-0 w-12 h-12 flex items-center justify-center"><i class="fas fa-id-card text-white"></i></div>
+                    <div>
+                        <div class="text-xs opacity-75">教師證照</div>
+                        <div class="font-bold">資訊 / 數學 / 輔導 / 商管</div>
+                    </div>
+                </div>
+                <div class="bg-white/10 backdrop-blur p-4 rounded-xl border border-white/20 flex items-center transform transition hover:scale-105">
+                    <div class="bg-purple-500 p-3 rounded-full mr-4 flex-shrink-0 w-12 h-12 flex items-center justify-center"><i class="fas fa-star text-white"></i></div>
+                    <div>
+                        <div class="text-xs opacity-75">核心亮點</div>
+                        <div class="font-bold">雙語博覽會 + 資安黑客松</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Application Structure Plan:
+         1. SWOT Analysis (Matrix Interaction): Allows the user to click quadrants to understand the candidate's strategic positioning.
+         2. SMART Philosophy (Doughnut Chart): Visualizes the core management style interactively.
+         3. Career Timeline (Vertical Layout): Shows the evolution from teacher to admin leader.
+         4. Vision Radar (Radar Chart + Dynamic Content): Connects the 4 school visions (Character, Bilingual, Sustainability, International) with concrete actions.
+         5. Future Roadmap (Step Process): Outlines the growth plan.
+         Rationale: This structure moves from "Who I am" (SWOT/Timeline) to "How I think" (SMART) to "What I will do" (Vision), following a logical persuasive narrative for a job interview.
+    -->
+
+    <main class="container mx-auto px-4 py-12 space-y-20">
+
+        <!-- SWOT Section -->
+        <section id="swot-section" class="scroll-mt-24">
+            <div class="mb-8 text-center max-w-3xl mx-auto">
+                <h3 class="text-3xl font-bold text-gray-800 mb-4">個人 SWOT 策略分析</h3>
+                <p class="text-gray-600">
+                    本區塊針對個人特質進行戰略分析。點擊下方矩陣的各個象限，深入了解「藏拙揚善」實務做法，將跨域背景轉化為行政領導的絕對優勢。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+                <!-- Strengths -->
+                <div class="swot-card bg-white p-6 rounded-xl shadow-md border-t-4 border-green-500 cursor-pointer card-hover h-full" onclick="updateSwotDetail('S')">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-xl font-bold text-green-700">Strengths 優勢</h4>
+                        <i class="fas fa-dumbbell text-2xl text-green-100"></i>
+                    </div>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li class="flex items-start"><i class="fas fa-check text-green-500 mr-2 mt-1"></i><span>跨領域學歷 (食科碩+企管學)</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-green-500 mr-2 mt-1"></i><span>多張關鍵教師證 (資/數/輔/商)</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-green-500 mr-2 mt-1"></i><span>完整的行政組長歷練</span></li>
+                    </ul>
+                </div>
+
+                <!-- Weaknesses -->
+                <div class="swot-card bg-white p-6 rounded-xl shadow-md border-t-4 border-red-400 cursor-pointer card-hover h-full" onclick="updateSwotDetail('W')">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-xl font-bold text-red-600">Weaknesses 劣勢</h4>
+                        <i class="fas fa-exclamation-triangle text-2xl text-red-100"></i>
+                    </div>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li class="flex items-start"><i class="fas fa-check text-red-400 mr-2 mt-1"></i><span>非傳統師範背景</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-red-400 mr-2 mt-1"></i><span>職務多為協辦/專案</span></li>
+                    </ul>
+                </div>
+
+                <!-- Opportunities -->
+                <div class="swot-card bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-500 cursor-pointer card-hover h-full" onclick="updateSwotDetail('O')">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-xl font-bold text-blue-700">Opportunities 機會</h4>
+                        <i class="fas fa-lightbulb text-2xl text-blue-100"></i>
+                    </div>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li class="flex items-start"><i class="fas fa-check text-blue-500 mr-2 mt-1"></i><span>2030 雙語國家政策</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-blue-500 mr-2 mt-1"></i><span>數位轉型與 AI 教育入校</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-blue-500 mr-2 mt-1"></i><span>新課綱跨域探究需求與PBL</span></li>
+                    </ul>
+                </div>
+
+                <!-- Threats -->
+                <div class="swot-card bg-white p-6 rounded-xl shadow-md border-t-4 border-orange-500 cursor-pointer card-hover h-full" onclick="updateSwotDetail('T')">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-xl font-bold text-orange-700">Threats 威脅</h4>
+                        <i class="fas fa-shield-alt text-2xl text-orange-100"></i>
+                    </div>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li class="flex items-start"><i class="fas fa-check text-orange-500 mr-2 mt-1"></i><span>少子化招生壓力</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-orange-500 mr-2 mt-1"></i><span>行政大逃亡 (教育環境危機)</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Dynamic Detail Box for SWOT -->
+            <div id="swot-detail-box" class="mt-8 bg-gray-50 p-6 rounded-lg border border-gray-200 max-w-5xl mx-auto hidden animate-fade-in-down">
+                <h5 id="swot-detail-title" class="text-lg font-bold mb-2">策略分析詳情</h5>
+                <p id="swot-detail-text" class="text-gray-700 mb-4"></p>
+                <div class="p-4 bg-white rounded-lg border-l-4 border-blue-600 shadow-sm flex items-start">
+                    <i class="fas fa-chess-knight text-blue-600 mt-1 mr-3"></i>
+                    <div>
+                        <div class="font-bold text-blue-800 text-sm uppercase tracking-wide mb-1">應對策略</div>
+                        <span id="swot-detail-strategy" class="text-gray-800 font-medium">請點擊上方卡片查看詳細策略。</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SMART Philosophy Section -->
+        <section id="philosophy" class="scroll-mt-24 bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2 w-full">
+                    <h3 class="text-3xl font-bold text-gray-800 mb-4">教育理念：SMART 行政</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        行政不是管理，而是支援。結合企管 <span class="font-bold text-blue-600">PDCA 循環</span>與教育熱忱，我提出「SMART」行政哲學，旨在建立一個高效、有溫度且具韌性的支持系統。請點擊右側圖表區塊，深入了解每個字母代表的含義。
+                    </p>
+                    
+                    <!-- Dynamic Description Area -->
+                    <div id="smart-description" class="bg-blue-50 p-6 rounded-xl border border-blue-100 min-h-[160px] transition-all duration-300 relative overflow-hidden">
+                        <div class="absolute right-0 top-0 opacity-10 text-9xl font-bold text-blue-900 pointer-events-none" id="smart-bg-letter">S</div>
+                        <div class="relative z-10">
+                            <div class="flex items-center mb-3">
+                                <div id="smart-icon" class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center mr-3 text-lg font-bold shadow-md">S</div>
+                                <h4 id="smart-title" class="text-xl font-bold text-blue-900">Service 服務</h4>
+                            </div>
+                            <p id="smart-text" class="text-gray-700 leading-relaxed">行政是服務非官僚。主動發現師生需求，提供溫暖的支持系統，讓老師專心教學，學生安心學習。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:w-1/2 w-full flex justify-center">
+                    <!-- Visualization & Content Choices:
+                         Goal: Inform & Engage.
+                         Viz: Doughnut Chart.
+                         Justification: A doughnut chart represents the 'whole' philosophy composed of parts. Interaction allows focusing on one aspect at a time.
+                         Library: Chart.js
+                    -->
+                    <div class="chart-container">
+                        <canvas id="smartChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vision & Strategy Section -->
+        <section id="vision" class="scroll-mt-24">
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-bold text-gray-800">學校願景具體作為</h3>
+                <p class="text-gray-600 mt-2">針對學校四大願景提出之策略規劃與預期效益</p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-8 items-stretch">
+                <!-- Left: Interactive Radar Chart -->
+                <div class="w-full lg:w-1/3 bg-white p-6 rounded-xl shadow-lg border border-gray-100 flex flex-col">
+                    <h4 class="text-lg font-bold text-gray-700 mb-4 text-center">願景投入權重分析</h4>
+                    <div class="chart-container flex-grow">
+                        <canvas id="visionRadar"></canvas>
+                    </div>
+                    <p class="text-xs text-center text-gray-400 mt-4"><i class="fas fa-mouse-pointer mr-1"></i> 點擊雷達圖頂點查看策略</p>
+                </div>
+
+                <!-- Right: Content Tabs/Cards -->
+                <div class="w-full lg:w-2/3 flex flex-col">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 flex-grow">
+                        <div class="flex border-b overflow-x-auto" id="vision-tabs">
+                            <button onclick="updateVision('Character')" class="vision-tab flex-1 py-4 px-6 text-center font-medium hover:bg-gray-50 focus:outline-none whitespace-nowrap active-tab transition-colors duration-200" data-vision="Character">
+                                <i class="fas fa-heart mr-2"></i>品格力
+                            </button>
+                            <button onclick="updateVision('Bilingual')" class="vision-tab flex-1 py-4 px-6 text-center font-medium text-gray-500 hover:bg-gray-50 focus:outline-none whitespace-nowrap transition-colors duration-200" data-vision="Bilingual">
+                                <i class="fas fa-language mr-2"></i>雙語力
+                            </button>
+                            <button onclick="updateVision('Sustainability')" class="vision-tab flex-1 py-4 px-6 text-center font-medium text-gray-500 hover:bg-gray-50 focus:outline-none whitespace-nowrap transition-colors duration-200" data-vision="Sustainability">
+                                <i class="fas fa-leaf mr-2"></i>永續力
+                            </button>
+                            <button onclick="updateVision('International')" class="vision-tab flex-1 py-4 px-6 text-center font-medium text-gray-500 hover:bg-gray-50 focus:outline-none whitespace-nowrap transition-colors duration-200" data-vision="International">
+                                <i class="fas fa-globe mr-2"></i>國際力
+                            </button>
+                        </div>
+
+                        <div class="p-8 bg-gray-50/50 h-full flex flex-col justify-center">
+                            <div class="animate-fade-in" id="vision-content-container">
+                                <h4 id="vision-title" class="text-2xl font-bold text-blue-800 mb-2">科技倫理與負責態度</h4>
+                                <div class="w-16 h-1 bg-orange-500 mb-6 rounded-full"></div>
+                                
+                                <div class="space-y-6">
+                                    <div>
+                                        <h5 class="font-bold text-gray-700 flex items-center mb-2">
+                                            <span class="bg-blue-100 text-blue-700 py-1 px-3 rounded-full text-xs font-bold mr-2 uppercase tracking-wide">Action Plan</span>
+                                            具體行動方案
+                                        </h5>
+                                        <ul id="vision-actions" class="list-disc list-inside text-gray-600 space-y-2 ml-1">
+                                            <li><strong>資安素養融入：</strong>結合資安經驗，推動上網禮儀與資安教育。</li>
+                                            <li><strong>服務學習：</strong>舉辦校內資訊志工隊或科學營隊，讓學生服務他人。</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="bg-green-50 p-4 rounded-lg border border-green-200 shadow-sm">
+                                        <h5 class="font-bold text-green-800 flex items-center mb-1 text-sm uppercase tracking-wide">
+                                            <i class="fas fa-bullseye mr-2"></i>預期效益
+                                        </h5>
+                                        <p id="vision-benefit" class="text-green-700 font-medium">
+                                            培養學生在數位時代的正確價值觀，懂得尊重與負責。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Career Timeline Section -->
+        <section id="career" class="scroll-mt-24 max-w-4xl mx-auto pb-12">
+            <h3 class="text-3xl font-bold text-gray-800 mb-12 text-center">經歷成長軌跡</h3>
+            <div class="relative ml-4 md:ml-10 space-y-12">
+                <!-- The vertical line -->
+                <div class="timeline-line"></div>
+                
+                <!-- Item 1 -->
+                <div class="relative pl-12 md:pl-16 group">
+                    <div class="absolute left-3 md:left-4 top-1 w-5 h-5 bg-white rounded-full border-4 border-blue-200 group-hover:border-blue-500 group-hover:scale-125 transition duration-300 z-10"></div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition duration-300">
+                        <span class="inline-block px-3 py-1 bg-gray-100 text-gray-600 text-xs font-bold rounded-full mb-3">2001 - 2008</span>
+                        <h4 class="text-xl font-bold text-gray-800 mb-2">奠基期：教學與資訊起步</h4>
+                        <div class="text-sm text-gray-500 mb-3"><i class="fas fa-map-marker-alt mr-1"></i> 宜蘭東光國中</div>
+                        <p class="text-gray-600">
+                            擔任代理教師、導師、教學組長及資訊組長。此階段熟悉教務運作SOP，並建立資訊教育基礎。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="relative pl-12 md:pl-16 group">
+                    <div class="absolute left-3 md:left-4 top-1 w-5 h-5 bg-white rounded-full border-4 border-blue-300 group-hover:border-blue-600 group-hover:scale-125 transition duration-300 z-10"></div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition duration-300">
+                        <span class="inline-block px-3 py-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-full mb-3">2011 - 2018</span>
+                        <h4 class="text-xl font-bold text-gray-800 mb-2">深耕期：專任教學與競賽</h4>
+                        <div class="text-sm text-gray-500 mb-3"><i class="fas fa-map-marker-alt mr-1"></i> 南投營北國中</div>
+                        <p class="text-gray-600">
+                            深耕數學與科學教學，指導學生參加全縣科展與數學競賽，屢獲佳績，奠定扎實教學基礎。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="relative pl-12 md:pl-16 group">
+                    <div class="absolute left-3 md:left-4 top-1 w-5 h-5 bg-orange-400 rounded-full border-4 border-white shadow-md z-10"></div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-orange-400 hover:shadow-xl transition duration-300">
+                        <span class="inline-block px-3 py-1 bg-orange-50 text-orange-600 text-xs font-bold rounded-full mb-3">2018 - 2021</span>
+                        <h4 class="text-xl font-bold text-gray-800 mb-2">跨域期：雙語與資安推動</h4>
+                        <p class="text-gray-600">
+                            跨足雙語行政，承辦全縣英語文競賽。申請雙語計畫和姊妹校計畫，開始展現「科技+雙語」雙引擎優勢。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="relative pl-12 md:pl-16 group">
+                    <div class="absolute left-3 md:left-4 top-1 w-5 h-5 bg-blue-600 rounded-full border-4 border-white shadow-md z-10 animate-pulse"></div>
+                    <div class="bg-gradient-to-r from-blue-50 to-white p-6 rounded-xl shadow-md border border-blue-200 hover:shadow-xl transition duration-300">
+                        <span class="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-xs font-bold rounded-full mb-3">2022 - Present</span>
+                        <h4 class="text-xl font-bold text-gray-800 mb-2">整合期：新興科技與全縣規劃</h4>
+                        <p class="text-gray-600">
+                            帶領數位黑客松競賽與AI教育，參與縣府新聞組團隊。協辦多項縣國際教育活動，具備規劃全縣重大活動之宏觀能力。
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Future Growth Section -->
+        <section id="growth" class="scroll-mt-24 bg-gray-800 text-white rounded-3xl p-8 md:p-12 text-center shadow-2xl relative overflow-hidden">
+            <!-- Decorative circle -->
+            <div class="absolute top-0 left-0 w-64 h-64 bg-white opacity-5 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-blue-500 opacity-10 rounded-full translate-x-1/3 translate-y-1/3"></div>
+
+            <h3 class="text-3xl font-bold mb-4 relative z-10">未來專業成長藍圖</h3>
+            <p class="text-gray-400 mb-10 max-w-2xl mx-auto relative z-10">終身學習是教育者的天職，未來設定的三大成長引擎。</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+                <!-- Card 1 -->
+                <div class="bg-gray-700/50 backdrop-blur-sm p-8 rounded-2xl hover:bg-gray-700 transition duration-300 transform hover:-translate-y-2 border border-gray-600">
+                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl shadow-lg">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">AI 行政賦能專家</h4>
+                    <p class="text-gray-300 text-sm leading-relaxed">研究生成式 AI 於公文與計畫書之應用，開發模組分享同仁，成為縣內領頭羊。</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-gray-700/50 backdrop-blur-sm p-8 rounded-2xl hover:bg-gray-700 transition duration-300 transform hover:-translate-y-2 border border-gray-600">
+                    <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl shadow-lg">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">雙語行政領導人才</h4>
+                    <p class="text-gray-300 text-sm leading-relaxed">持續參與教育部計畫，提升英語能力，推動全校性雙語課程與國際教育活動。</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-gray-700/50 backdrop-blur-sm p-8 rounded-2xl hover:bg-gray-700 transition duration-300 transform hover:-translate-y-2 border border-gray-600">
+                    <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl shadow-lg">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">校園永續治理</h4>
+                    <p class="text-gray-300 text-sm leading-relaxed">結合企管背景導入 ESG 概念，引進AIOT協助推動環境教育獎與永續校園認證。</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-900 text-white py-12 mt-12 border-t border-gray-800">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex flex-wrap justify-center gap-4 mb-8 text-sm font-medium">
+                <span class="bg-gray-800 px-4 py-2 rounded-full border border-gray-700">企管思維 (效率)</span>
+                <span class="text-gray-500 flex items-center">+</span>
+                <span class="bg-gray-800 px-4 py-2 rounded-full border border-gray-700">資訊能力 (工具)</span>
+                <span class="text-gray-500 flex items-center">+</span>
+                <span class="bg-gray-800 px-4 py-2 rounded-full border border-gray-700">雙語經驗 (趨勢)</span>
+                <span class="text-gray-500 flex items-center">+</span>
+                <span class="bg-gray-800 px-4 py-2 rounded-full border border-gray-700 text-orange-400">熱忱的心 (基底)</span>
+            </div>
+            <p class="text-2xl font-bold mb-4 tracking-wide text-blue-400">= 新時代的全能主任</p>
+            <div class="w-16 h-1 bg-gray-700 mx-auto mb-8"></div>
+            <div class="text-sm text-gray-500">
+                &copy; 2024 洪錦男 主任甄選說明網站 | Designed for Impact
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Data Store
+        const swotData = {
+            'S': {
+                title: 'Strengths (優勢)',
+                desc: '擁有企管與食科跨域背景，加上數學、輔導、資科等多張證照，具備極強的實戰績效與完整行政歷練。',
+                strategy: '【強調整合力】強調「能用企業管理思維優化行政效率」，並能用「科技專長解決教學現場問題」的全方位主任。'
+            },
+            'W': {
+                title: 'Weaknesses (劣勢)',
+                desc: '非傳統師範體系出身，近期職務多為協辦或專案負責人，可能缺乏領導統御經驗。',
+                strategy: '【轉化為特色】非師範背景讓思維無框架，更能接受新興趨勢。將「協辦」轉化為「專案經理(PM)」角色，強調溝通協調力。'
+            },
+            'O': {
+                title: 'Opportunities (機會)',
+                desc: '教育部 2030 雙語政策與生生用平板、AI 入校政策，是個人專長的最佳發揮場域。',
+                strategy: '【順勢而為】提出具體的「AI 輔助行政減量」與「雙語校園營造」計畫，證明能帶領學校對接國家重大政策。'
+            },
+            'T': {
+                title: 'Threats (威脅)',
+                desc: '少子化衝擊導致招生壓力，以及行政大逃亡現象造成教師兼職意願低落。',
+                strategy: '【展現韌性】利用企管背景提出品牌行銷策略；利用 SMART 理念透過科技簡化流程，提升同仁行政意願。'
+            }
+        };
+
+        const smartData = {
+            'Service': {
+                title: 'Service 服務',
+                desc: '行政是服務非官僚。主動發現師生需求，提供溫暖的支持系統，讓老師專心教學，學生安心學習。'
+            },
+            'Management': {
+                title: 'Management 管理',
+                desc: '運用企管 PDCA 循環 (Plan-Do-Check-Act)，效率化行政流程，實現資源最佳化配置，減少不必要的行政虛耗。'
+            },
+            'Action': {
+                title: 'Action 行動',
+                desc: '坐而言不如起而行。面對問題積極解決，展現高強度的執行力與機動力，成為解決問題的推手。'
+            },
+            'Resilience': {
+                title: 'Resilience 韌性',
+                desc: '面對困難不退縮。擁有容錯與修正的勇氣，具備良好的情緒管理與抗壓性，在變動中維持穩定。'
+            },
+            'Technology': {
+                title: 'Technology 科技',
+                desc: '善用 AI 輔助決策，將資訊融入教學與行政。利用數據驅動校務發展，提升決策精準度。'
+            }
+        };
+
+        const visionData = {
+            'Character': {
+                title: '品格力 (Character): 科技倫理與負責態度',
+                actions: [
+                    '<strong>資安素養融入：</strong>結合資安經驗，推動上網禮儀與資安教育。',
+                    '<strong>服務學習：</strong>舉辦校內資訊志工隊或科學營隊，讓學生服務他人。'
+                ],
+                benefit: '培養學生在數位時代的正確價值觀，懂得尊重與負責。'
+            },
+            'Bilingual': {
+                title: '雙語力 (Bilingual): 營造沉浸式雙語環境',
+                actions: [
+                    '<strong>活動雙語化：</strong>推動校內活動（如運動會、廣播）採雙語進行。',
+                    '<strong>科技輔助：</strong>引進 AI 口說練習軟體，結合資訊課跨域學習。',
+                    '<strong>各科試行：</strong>從藝能科（資科、體育、音樂）開始，推動課室英語。'
+                ],
+                benefit: '提升學生開口說英語的自信，達成「校園生活化英語」。'
+            },
+            'Sustainability': {
+                title: '永續力 (Sustainability): SDGs 融入校園治理',
+                actions: [
+                    '<strong>行政無紙化：</strong>導入雲端表單與簽核系統，減少紙張浪費。',
+                    '<strong>環境教育實作：</strong>推動校園能源監控專案（結合 IoT 課程）。'
+                ],
+                benefit: '達成節能減碳目標，並將永續概念結合科技課程實踐。'
+            },
+            'International': {
+                title: '國際力 (International): 在地出發，連結全球',
+                actions: [
+                    '<strong>線上國際交流：</strong>運用視訊設備與國外姊妹校進行線上共學（PBL）。',
+                    '<strong>引進國際資源：</strong>引入外籍志工入校交流（海外青年英語服務營）和姊妹校交流活動。',
+                    '<strong>在地國際化：</strong>指導學生用英文行銷南投特色（茶葉、工藝）與各國學生交流。'
+                ],
+                benefit: '拓展學生國際視野，並能用外語自信表達在地文化。'
+            }
+        };
+
+        // SWOT Interaction
+        function updateSwotDetail(type) {
+            const box = document.getElementById('swot-detail-box');
+            const title = document.getElementById('swot-detail-title');
+            const text = document.getElementById('swot-detail-text');
+            const strategy = document.getElementById('swot-detail-strategy');
+
+            box.classList.remove('hidden');
+            // Remove animation class first to allow re-triggering (optional but good for visual)
+            box.classList.remove('animate-fade-in-down');
+            void box.offsetWidth; // trigger reflow
+            box.classList.add('animate-fade-in-down');
+
+            const data = swotData[type];
+            title.textContent = data.title;
+            text.innerHTML = data.desc;
+            strategy.innerHTML = data.strategy;
+
+            // Scroll to detail on mobile if needed
+            if(window.innerWidth < 768) {
+                box.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+            }
+        }
+
+        // Vision Tabs Interaction
+        function updateVision(visionKey) {
+            const data = visionData[visionKey];
+            
+            // Fade out content first
+            const container = document.getElementById('vision-content-container');
+            container.style.opacity = '0';
+
+            setTimeout(() => {
+                // Update UI Content
+                document.getElementById('vision-title').textContent = data.title;
+                const actionList = document.getElementById('vision-actions');
+                actionList.innerHTML = '';
+                data.actions.forEach(action => {
+                    const li = document.createElement('li');
+                    li.innerHTML = action;
+                    actionList.appendChild(li);
+                });
+                document.getElementById('vision-benefit').textContent = data.benefit;
+                
+                // Fade in
+                container.style.opacity = '1';
+            }, 200);
+
+
+            // Update Tab Styles
+            document.querySelectorAll('.vision-tab').forEach(tab => {
+                if (tab.dataset.vision === visionKey) {
+                    tab.classList.add('active-tab', 'text-blue-600', 'bg-blue-50');
+                    tab.classList.remove('text-gray-500');
+                } else {
+                    tab.classList.remove('active-tab', 'text-blue-600', 'bg-blue-50');
+                    tab.classList.add('text-gray-500');
+                }
+            });
+        }
+
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Chart Initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // 1. SMART Philosophy Doughnut Chart
+            const ctxSmart = document.getElementById('smartChart').getContext('2d');
+            const smartChart = new Chart(ctxSmart, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Service', 'Management', 'Action', 'Resilience', 'Technology'],
+                    datasets: [{
+                        data: [20, 20, 20, 20, 20], // Equal weight
+                        backgroundColor: [
+                            '#4299e1', // Blue 500
+                            '#2b6cb0', // Blue 700
+                            '#ed8936', // Orange 400
+                            '#48bb78', // Green 500
+                            '#805ad5'  // Purple 500
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#ffffff',
+                        hoverOffset: 15
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '65%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { font: { family: 'Noto Sans TC' }, padding: 20 }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label;
+                                }
+                            }
+                        }
+                    },
+                    onClick: (e, activeElements) => {
+                        if (activeElements.length > 0) {
+                            const index = activeElements[0].index;
+                            const labels = ['Service', 'Management', 'Action', 'Resilience', 'Technology'];
+                            const key = labels[index];
+                            
+                            // Update Text Box
+                            const data = smartData[key];
+                            const titleEl = document.getElementById('smart-title');
+                            const textEl = document.getElementById('smart-text');
+                            const iconEl = document.getElementById('smart-icon');
+                            const bgLetterEl = document.getElementById('smart-bg-letter');
+
+                            // Animate out
+                            titleEl.parentElement.parentElement.style.opacity = 0;
+                            
+                            setTimeout(() => {
+                                titleEl.textContent = data.title;
+                                textEl.textContent = data.desc;
+                                iconEl.textContent = key.charAt(0);
+                                bgLetterEl.textContent = key.charAt(0);
+                                
+                                // Color update
+                                const colors = ['bg-blue-600', 'bg-blue-700', 'bg-orange-400', 'bg-green-500', 'bg-purple-500'];
+                                iconEl.className = `w-10 h-10 rounded-full text-white flex items-center justify-center mr-3 text-lg font-bold shadow-md ${colors[index]}`;
+                                
+                                // Animate in
+                                titleEl.parentElement.parentElement.style.opacity = 1;
+                            }, 200);
+                        }
+                    }
+                }
+            });
+
+            // 2. Vision Radar Chart
+            const ctxVision = document.getElementById('visionRadar').getContext('2d');
+            const visionChart = new Chart(ctxVision, {
+                type: 'radar',
+                data: {
+                    labels: ['品格力\n(Character)', '雙語力\n(Bilingual)', '永續力\n(Sustainability)', '國際力\n(International)'],
+                    datasets: [{
+                        label: '願景投入權重',
+                        data: [90, 95, 85, 90],
+                        fill: true,
+                        backgroundColor: 'rgba(66, 153, 225, 0.2)',
+                        borderColor: '#2b6cb0',
+                        pointBackgroundColor: '#ed8936',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#ed8936',
+                        pointRadius: 5,
+                        pointHoverRadius: 7
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { display: true },
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            ticks: { display: false, backdropColor: 'transparent' },
+                            pointLabels: {
+                                font: { size: 12, family: 'Noto Sans TC' },
+                                color: '#4a5568'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `投入強度: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    },
+                    onClick: (e, activeElements) => {
+                        if (activeElements.length > 0) {
+                            const index = activeElements[0].index;
+                            const keys = ['Character', 'Bilingual', 'Sustainability', 'International'];
+                            updateVision(keys[index]);
+                        }
+                    }
+                }
+            });
+        });
+
+    </script>
+    <!-- CONFIRMATION: NO SVG graphics used (using FontAwesome and Canvas). NO Mermaid JS used (using Chart.js). -->
+</body>
+</html>
